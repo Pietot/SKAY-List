@@ -29,7 +29,7 @@ def sort_extreme_list_by_aredl_points(list_path: str = "data/_extreme_list.json"
     ]
 
     with open(list_path, "w", encoding="utf-8") as f:
-        json.dump(sorted_items, f, indent=4)
+        json.dump(sorted_items, f, indent=4, ensure_ascii=False)
 
     return sorted_items
 
@@ -99,10 +99,10 @@ if __name__ == "__main__":
             data.append(new_item.name)
 
         with open("data/_extreme_list.json", "w", encoding="utf-8") as f:
-            json.dump(data, f, indent=4)
+            json.dump(data, f, indent=4, ensure_ascii=False)
 
         with open(f"data/extremes/{new_item.name}.json", "w", encoding="utf-8") as f:
-            json.dump(new_item.model_dump(), f, indent=4)
+            json.dump(new_item.model_dump(), f, indent=4, ensure_ascii=False)
 
         sort_extreme_list_by_aredl_points()
 
@@ -113,6 +113,7 @@ if __name__ == "__main__":
             author=args.author,
             creators=args.creators,
             verifier=args.verifier,
+            verification=args.verification,
         )
 
         # check if the name is already in the JSON file
@@ -124,7 +125,7 @@ if __name__ == "__main__":
             data.append(new_item.name)
 
         with open("data/_challenge_list.json", "w", encoding="utf-8") as f:
-            json.dump(data, f, indent=4)
+            json.dump(data, f, indent=4, ensure_ascii=False)
 
         with open(f"data/challenges/{new_item.name}.json", "w", encoding="utf-8") as f:
-            json.dump(new_item.model_dump(), f, indent=4)
+            json.dump(new_item.model_dump(), f, indent=4, ensure_ascii=False)
