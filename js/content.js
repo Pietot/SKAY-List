@@ -54,56 +54,68 @@ export async function fetchEditors() {
     }
 }
 
-export async function fetchLeaderboard() {
-    const list = await fetchList();
+export async function fetchLeaderboard(listType = "challenges") {
+    const list = await fetchList(listType);
+    if (!Array.isArray(list)) {
+        return [[], []];
+    }
 
     const scoreMap = {};
     const errs = [];
+
     list.forEach(([level, err], rank) => {
-        if (err) {
-            errs.push(err);
+        if (err || !level) {
+            if (err) {
+                errs.push(err);
+            }
             return;
         }
 
-        // Verification
-        const verifier =
-            Object.keys(scoreMap).find(
-                (u) => u.toLowerCase() === level.verifier.toLowerCase(),
-            ) || level.verifier;
-        scoreMap[verifier] ??= {
-            verified: [],
-            completed: [],
-        };
-        const { verified } = scoreMap[verifier];
-        verified.push({
-            rank: rank + 1,
-            level: level.name,
-            score: score(rank + 1, 100),
-            link: level.verification,
-        });
+        if (listType === "challenges") {
+            const verifier =
+                Object.keys(scoreMap).find(
+                    (u) =>
+                        u.toLowerCase() ===
+                        (level.verifier || "").toLowerCase(),
+                ) ||
+                level.verifier ||
+                "Unknown";
+            scoreMap[verifier] ??= {
+                verified: [],
+                completed: [],
+            };
 
-        // Records
-        level.records.forEach((record) => {
+            const { verified } = scoreMap[verifier];
+            verified.push({
+                rank: rank + 1,
+                level: level.name,
+                score: score(rank + 1),
+                link: level.verification,
+            });
+        }
+
+        (level.records || []).forEach((record) => {
             const user =
                 Object.keys(scoreMap).find(
-                    (u) => u.toLowerCase() === record.user.toLowerCase(),
+                    (u) =>
+                        u.toLowerCase() === (record.user || "").toLowerCase(),
                 ) || record.user;
             scoreMap[user] ??= {
                 verified: [],
                 completed: [],
             };
+
             const { completed } = scoreMap[user];
             completed.push({
                 rank: rank + 1,
                 level: level.name,
-                score: score(rank + 1, 100),
+                score: level.aredl_points,
                 link: record.link,
             });
             return;
         });
     });
 
-    // Wrap in extra Object containing the user and total score
     const res = Object.entries(scoreMap).map(([user, scores]) => {
         const { verified, completed } = scores;
         const total = [verified, completed]
@@ -112,11 +124,10 @@ export async function fetchLeaderboard() {
 
         return {
             user,
-            total: Math.round(total),
+            total: Math.round((total + Number.EPSILON) * 100) / 100,
             ...scores,
         };
     });
 
-    // Sort by total score
     return [res.sort((a, b) => b.total - a.total), errs];
 }

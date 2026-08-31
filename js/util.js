@@ -9,10 +9,6 @@ export function embed(video) {
     return `https://www.youtube.com/embed/${getYoutubeIdFromUrl(video)}`;
 }
 
-export function localize(num) {
-    return num.toLocaleString(undefined, { minimumFractionDigits: 3 });
-}
-
 export function getThumbnailFromId(id) {
     return `https://img.youtube.com/vi/${id}/mqdefault.jpg`;
 }

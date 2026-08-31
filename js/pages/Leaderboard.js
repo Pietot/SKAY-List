@@ -1,11 +1,16 @@
-import { fetchLeaderboard } from '../content.js';
-import { localize } from '../util.js';
+import { fetchLeaderboard } from "../content.js";
 
-import Spinner from '../components/Spinner.js';
+import Spinner from "../components/Spinner.js";
 
 export default {
     components: {
         Spinner,
+    },
+    props: {
+        listType: {
+            type: String,
+            default: "challenges",
+        },
     },
     data: () => ({
         leaderboard: [],
@@ -31,7 +36,7 @@ export default {
                                 <p class="type-label-lg">#{{ i + 1 }}</p>
                             </td>
                             <td class="total">
-                                <p class="type-label-lg">{{ localize(ientry.total) }}</p>
+                                <p class="type-label-lg">{{ ientry.total }}</p>
                             </td>
                             <td class="user" :class="{ 'active': selected == i }">
                                 <button @click="selected = i">
@@ -41,11 +46,11 @@ export default {
                         </tr>
                     </table>
                 </div>
-                <div class="player-container">
+                <div class="player-container" v-if="entry">
                     <div class="player">
                         <h1>#{{ selected + 1 }} {{ entry.user }}</h1>
                         <h3>{{ entry.total }}</h3>
-                        <h2 v-if="entry.verified.length > 0">Verified ({{ entry.verified.length}})</h2>
+                        <h2 v-if="entry.verified && entry.verified.length > 0">Verified ({{ entry.verified.length }})</h2>
                         <table class="table">
                             <tr v-for="score in entry.verified">
                                 <td class="rank">
@@ -55,11 +60,11 @@ export default {
                                     <a class="type-label-lg" target="_blank" :href="score.link">{{ score.level }}</a>
                                 </td>
                                 <td class="score">
-                                    <p>+{{ localize(score.score) }}</p>
+                                    <p>+{{ score.score }}</p>
                                 </td>
                             </tr>
                         </table>
-                        <h2 v-if="entry.completed.length > 0">Completed ({{ entry.completed.length }})</h2>
+                        <h2 v-if="entry.completed && entry.completed.length > 0">Completed ({{ entry.completed.length }})</h2>
                         <table class="table">
                             <tr v-for="score in entry.completed">
                                 <td class="rank">
@@ -69,11 +74,11 @@ export default {
                                     <a class="type-label-lg" target="_blank" :href="score.link">{{ score.level }}</a>
                                 </td>
                                 <td class="score">
-                                    <p>+{{ localize(score.score) }}</p>
+                                    <p>+{{ score.score }}</p>
                                 </td>
                             </tr>
                         </table>
-                        <h2 v-if="entry.progressed.length > 0">Progressed ({{entry.progressed.length}})</h2>
+                        <h2 v-if="entry.progressed && entry.progressed.length > 0">Progressed ({{ entry.progressed.length }})</h2>
                         <table class="table">
                             <tr v-for="score in entry.progressed">
                                 <td class="rank">
@@ -83,7 +88,7 @@ export default {
                                     <a class="type-label-lg" target="_blank" :href="score.link">{{ score.percent }}% {{ score.level }}</a>
                                 </td>
                                 <td class="score">
-                                    <p>+{{ localize(score.score) }}</p>
+                                    <p>+{{ score.score }}</p>
                                 </td>
                             </tr>
                         </table>
@@ -94,17 +99,25 @@ export default {
     `,
     computed: {
         entry() {
-            return this.leaderboard[this.selected];
+            return this.leaderboard[this.selected] || null;
         },
     },
-    async mounted() {
-        const [leaderboard, err] = await fetchLeaderboard();
-        this.leaderboard = leaderboard;
-        this.err = err;
-        // Hide loading spinner
-        this.loading = false;
+    watch: {
+        listType: {
+            immediate: true,
+            handler() {
+                this.loadLeaderboard();
+            },
+        },
     },
     methods: {
-        localize,
+        async loadLeaderboard() {
+            this.loading = true;
+            this.selected = 0;
+            const [leaderboard, err] = await fetchLeaderboard(this.listType);
+            this.leaderboard = leaderboard;
+            this.err = err;
+            this.loading = false;
+        },
     },
 };

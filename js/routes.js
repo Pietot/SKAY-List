@@ -13,5 +13,14 @@ export default [
         component: List,
         props: { listType: "extremes" },
     },
-    { path: "/leaderboard", component: Leaderboard },
+    {
+        path: "/leaderboard/challenges",
+        component: Leaderboard,
+        props: { listType: "challenges" },
+    },
+    {
+        path: "/leaderboard/extremes",
+        component: Leaderboard,
+        props: { listType: "extremes" },
+    },
 ];
