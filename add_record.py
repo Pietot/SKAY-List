@@ -47,7 +47,6 @@ def main() -> None:
     parser.add_argument("--name", required=True, help="Name of the level in the JSON file.")
     parser.add_argument("--user", required=True, help="Username who got the record.")
     parser.add_argument("--link", required=True, help="Video link of the record.")
-    parser.add_argument("--hz", type=int, default=60, help="Refresh rate in Hz.")
     args = parser.parse_args()
 
     try:
@@ -60,7 +59,7 @@ def main() -> None:
     if "records" not in data or data["records"] is None:
         data["records"] = []
 
-    record = Record(user=args.user, link=args.link, hz=args.hz)
+    record = Record(user=args.user, link=args.link)
     data["records"].append(record.model_dump())
 
     save_json(level_path, data)

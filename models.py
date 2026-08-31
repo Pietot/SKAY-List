@@ -4,7 +4,6 @@ from pydantic import BaseModel, Field
 class Record(BaseModel):
     user: str = Field(..., description="The name of the player who achieved the record.")
     link: str = Field(..., description="The URL of the video showcasing the record.")
-    hz: int = Field(..., description="The refresh rate (Hz) at which the record was achieved.")
 
 
 class ExtremeDemon(BaseModel):
