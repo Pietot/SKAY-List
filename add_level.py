@@ -3,24 +3,8 @@ import json
 import sys
 
 import requests as r
-from pydantic import BaseModel, Field
 
-
-class ExtremeDemon(BaseModel):
-    id: int = Field(..., description="The unique identifier for the extreme demon.")
-    name: str = Field(..., description="The name of the extreme demon.")
-    author: str = Field(..., description="The author of the extreme demon.")
-    creators: list[str] = Field(..., description="The creators of the extreme demon.")
-    verifier: str = Field(..., description="The verifier of the extreme demon.")
-    aredl_points: int = Field(..., description="The AREDL points of the extreme demon.")
-
-
-class Challenge(BaseModel):
-    id: int = Field(..., description="The unique identifier for the challenge.")
-    name: str = Field(..., description="The name of the challenge.")
-    author: str = Field(..., description="The author of the challenge.")
-    creators: list[str] = Field(..., description="The creators of the challenge.")
-    verifier: str = Field(..., description="The verifier of the challenge.")
+from models import Challenge, ExtremeDemon
 
 
 def sort_extreme_list_by_aredl_points(list_path: str = "data/_extreme_list.json") -> list[str]:
