@@ -7,7 +7,7 @@ class Record(BaseModel):
 
 
 class ExtremeDemon(BaseModel):
-    id: int = Field(..., description="The unique identifier for the extreme demon.")
+    id: str = Field(..., description="The unique identifier for the extreme demon.")
     name: str = Field(..., description="The name of the extreme demon.")
     author: str = Field(..., description="The author of the extreme demon.")
     creators: list[str] = Field(..., description="The creators of the extreme demon.")
