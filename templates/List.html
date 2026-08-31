@@ -32,7 +32,16 @@
                 :creators="level.creators"
                 :verifier="level.verifier"
             ></LevelAuthors>
+            <video
+                v-if="video && !isYoutubeVideo"
+                class="video"
+                id="videoframe"
+                :src="video"
+                controls
+                playsinline
+            ></video>
             <iframe
+                v-else-if="video"
                 class="video"
                 id="videoframe"
                 :src="video"

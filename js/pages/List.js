@@ -42,44 +42,72 @@ export default {
         level() {
             return this.list[this.selected][0];
         },
+        isYoutubeVideo() {
+            const url = this.level?.verification || "";
+            return /(?:youtu\.be|youtube\.com)/i.test(url);
+        },
         video() {
-            if (!this.level.showcase) {
-                return embed(this.level.verification);
+            if (!this.level) {
+                return "";
             }
 
-            return embed(
-                this.toggledShowcase
-                    ? this.level.showcase
-                    : this.level.verification,
-            );
+            const verification = this.level.verification || "";
+            const showcase = this.level.showcase || "";
+
+            if (this.level.showcase && this.toggledShowcase) {
+                return /(?:youtu\.be|youtube\.com)/i.test(showcase)
+                    ? embed(showcase)
+                    : showcase;
+            }
+
+            if (/(?:youtu\.be|youtube\.com)/i.test(verification)) {
+                return embed(verification);
+            }
+
+            return verification || showcase;
         },
     },
     async mounted() {
-        // Hide loading spinner
-        this.list = await fetchList();
-        this.editors = await fetchEditors();
-
-        // Error handling
-        if (!this.list) {
-            this.errors = [
-                "Failed to load list. Retry in a few minutes or notify list staff.",
-            ];
-        } else {
-            this.errors.push(
-                ...this.list
-                    .filter(([_, err]) => err)
-                    .map(([_, err]) => {
-                        return `Failed to load level. (${err}.json)`;
-                    }),
-            );
-            if (!this.editors) {
-                this.errors.push("Failed to load list editors.");
-            }
-        }
-
-        this.loading = false;
+        await this.loadList();
+    },
+    watch: {
+        listType: {
+            immediate: true,
+            handler() {
+                this.loadList();
+            },
+        },
     },
     methods: {
+        async loadList() {
+            this.loading = true;
+            this.selected = 0;
+            this.errors = [];
+            this.list = [];
+
+            this.list = await fetchList(this.listType);
+            this.editors = await fetchEditors();
+
+            // Error handling
+            if (!this.list) {
+                this.errors = [
+                    "Failed to load list. Retry in a few minutes or notify list staff.",
+                ];
+            } else {
+                this.errors.push(
+                    ...this.list
+                        .filter(([_, err]) => err)
+                        .map(([_, err]) => {
+                            return `Failed to load level. (${err}.json)`;
+                        }),
+                );
+                if (!this.editors) {
+                    this.errors.push("Failed to load list editors.");
+                }
+            }
+
+            this.loading = false;
+        },
         embed,
         score,
     },

@@ -1,17 +1,27 @@
-import { round, score } from './score.js';
+import { round, score } from "./score.js";
 
 /**
- * Path to directory containing `_list.json` and all levels
+ * Path to directory containing the list metadata files and all levels.
  */
-const dir = '/data';
+const dir = "/data";
 
-export async function fetchList() {
-    const listResult = await fetch(`${dir}/_list.json`);
+const listFileByType = {
+    challenges: "_challenge_list.json",
+    extremes: "_extreme_list.json",
+};
+
+export async function fetchList(listType = "challenges") {
+    const listFile = listFileByType[listType] ?? listFileByType.challenges;
+    const listResult = await fetch(`${dir}/${listFile}`);
+
     try {
         const list = await listResult.json();
+        const subDir = listType === "challenges" ? `/challenges` : `/extremes`;
         return await Promise.all(
             list.map(async (path, rank) => {
-                const levelResult = await fetch(`${dir}/${path}.json`);
+                const levelResult = await fetch(
+                    `${dir}/${subDir}/${path}.json`,
+                );
                 try {
                     const level = await levelResult.json();
                     return [
@@ -31,7 +41,7 @@ export async function fetchList() {
             }),
         );
     } catch {
-        console.error(`Failed to load list.`);
+        console.error(`Failed to load list: ${listFile}`);
         return null;
     }
 }
@@ -58,9 +68,10 @@ export async function fetchLeaderboard() {
         }
 
         // Verification
-        const verifier = Object.keys(scoreMap).find(
-            (u) => u.toLowerCase() === level.verifier.toLowerCase(),
-        ) || level.verifier;
+        const verifier =
+            Object.keys(scoreMap).find(
+                (u) => u.toLowerCase() === level.verifier.toLowerCase(),
+            ) || level.verifier;
         scoreMap[verifier] ??= {
             verified: [],
             completed: [],
@@ -76,9 +87,10 @@ export async function fetchLeaderboard() {
 
         // Records
         level.records.forEach((record) => {
-            const user = Object.keys(scoreMap).find(
-                (u) => u.toLowerCase() === record.user.toLowerCase(),
-            ) || record.user;
+            const user =
+                Object.keys(scoreMap).find(
+                    (u) => u.toLowerCase() === record.user.toLowerCase(),
+                ) || record.user;
             scoreMap[user] ??= {
                 verified: [],
                 completed: [],
