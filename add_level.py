@@ -85,9 +85,10 @@ if __name__ == "__main__":
             id=args.id,
             name=level_data["name"],
             author=level_data["publisher"]["global_name"],
-            creators=creators_list,
+            creators=creators_list or [level_data["publisher"]["global_name"]],
             verifier=level_data["verifications"][-1]["submitted_by"]["global_name"],
             aredl_points=level_data["points"],
+            verification=level_data["verifications"][-1]["video_url"],
         )
         # check if the name is already in the JSON file
         with open("data/_extreme_list.json", "r", encoding="utf-8") as f:

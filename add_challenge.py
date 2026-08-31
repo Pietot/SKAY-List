@@ -6,6 +6,7 @@ NAME = ""
 AUTHOR = ""
 CREATORS = [""]
 VERIFIER = ""
+VERIFICATION = ""
 
 if __name__ == "__main__":
     cmd = [
@@ -23,6 +24,8 @@ if __name__ == "__main__":
         *CREATORS,
         "--verifier",
         VERIFIER,
+        "--verification",
+        VERIFICATION,
     ]
     cmd.extend(sys.argv[1:])
     subprocess.run(cmd, check=False)

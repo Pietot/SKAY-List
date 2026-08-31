@@ -52,19 +52,12 @@ export default {
             }
 
             const verification = this.level.verification || "";
-            const showcase = this.level.showcase || "";
-
-            if (this.level.showcase && this.toggledShowcase) {
-                return /(?:youtu\.be|youtube\.com)/i.test(showcase)
-                    ? embed(showcase)
-                    : showcase;
-            }
 
             if (/(?:youtu\.be|youtube\.com)/i.test(verification)) {
                 return embed(verification);
             }
 
-            return verification || showcase;
+            return verification;
         },
     },
     async mounted() {

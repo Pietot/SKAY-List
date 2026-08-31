@@ -14,6 +14,7 @@ class ExtremeDemon(BaseModel):
     creators: list[str] = Field(..., description="The creators of the extreme demon.")
     verifier: str = Field(..., description="The verifier of the extreme demon.")
     aredl_points: int = Field(..., description="The AREDL points of the extreme demon.")
+    verification: str = Field(..., description="The verification link of the extreme demon.")
 
 
 class Challenge(BaseModel):
@@ -22,3 +23,4 @@ class Challenge(BaseModel):
     author: str = Field(..., description="The author of the challenge.")
     creators: list[str] = Field(..., description="The creators of the challenge.")
     verifier: str = Field(..., description="The verifier of the challenge.")
+    verification: str = Field(..., description="The verification link of the challenge.")
