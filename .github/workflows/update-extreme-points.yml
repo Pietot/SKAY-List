@@ -25,3 +25,15 @@ jobs:
 
             - name: Refresh extreme demon points
               run: python update_extreme_points.py
+
+            - name: Commit and push updates
+              run: |
+                  git config user.name "github-actions[bot]"
+                  git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+                  git add data/_extreme_list.json data/extremes/*.json
+                  if git diff --cached --quiet; then
+                    echo "No changes to commit."
+                  else
+                    git commit -m "Update extreme demon points"
+                    git push
+                  fi
