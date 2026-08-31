@@ -23,6 +23,33 @@ class Challenge(BaseModel):
     verifier: str = Field(..., description="The verifier of the challenge.")
 
 
+def sort_extreme_list_by_aredl_points(list_path: str = "data/_extreme_list.json") -> list[str]:
+    try:
+        with open(list_path, "r", encoding="utf-8") as f:
+            item_names = json.load(f)
+    except FileNotFoundError:
+        return []
+
+    ranked_items = []
+    for item_name in item_names:
+        file_path = f"data/extremes/{item_name}.json"
+        try:
+            with open(file_path, "r", encoding="utf-8") as f:
+                item = json.load(f)
+            ranked_items.append((item.get("aredl_points", 0), item_name))
+        except FileNotFoundError:
+            ranked_items.append((0, item_name))
+
+    sorted_items = [
+        name for _, name in sorted(ranked_items, key=lambda pair: pair[0], reverse=True)
+    ]
+
+    with open(list_path, "w", encoding="utf-8") as f:
+        json.dump(sorted_items, f, indent=4)
+
+    return sorted_items
+
+
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(
         description="Add a new extreme demon or challenge to the JSON file."
@@ -87,6 +114,8 @@ if __name__ == "__main__":
 
         with open(f"data/extremes/{new_item.name}.json", "w", encoding="utf-8") as f:
             json.dump(new_item.model_dump(), f, indent=4)
+
+        sort_extreme_list_by_aredl_points()
 
     elif args.type == "challenge":
         new_item = Challenge(
