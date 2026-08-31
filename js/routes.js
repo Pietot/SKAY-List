@@ -14,5 +14,4 @@ export default [
         props: { listType: "extremes" },
     },
     { path: "/leaderboard", component: Leaderboard },
-    { path: "/roulette", component: Roulette },
 ];
