@@ -39,9 +39,13 @@ if __name__ == "__main__":
         description="Add a new extreme demon or challenge to the JSON file."
     )
     parser.add_argument(
-        "--type", type=str, help="The type of the item to add (extreme or challenge)."
+        "--type",
+        type=str,
+        help="The type of the item to add (extreme or challenge).",
+        choices=["extreme", "challenge"],
+        required=True,
     )
-    parser.add_argument("--id", type=str, help="The ID of the item to add.")
+    parser.add_argument("--id", type=str, help="The ID of the item to add.", required=True)
     parser.add_argument("--name", type=str, help="The name of the challenge to add.")
     parser.add_argument("--author", type=str, help="The author of the challenge to add.")
     parser.add_argument(
