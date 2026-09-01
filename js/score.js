@@ -8,9 +8,9 @@ export function score(rank) {
         return 0;
     }
 
-    let k = 0.4;
+    let k = -0.4;
     let x = 150;
-    let score = (x / (Math.pow(x, k) + 1 - Math.pow(x / rank, k))) ^ (1 / k);
+    let result = x / Math.pow(Math.pow(x, k) + 1 - Math.pow(x / 1, k), 1 / k);
 
-    return Math.round(score);
+    return Math.round(result);
 }
