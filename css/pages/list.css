@@ -78,12 +78,17 @@
 .page-list .level-container .level .records tr td:not(:last-child) {
     padding-right: 1rem;
 }
+
 .page-list .level-container .level .records .percent,
-.page-list .level-container .level .records .user,
+.page-list .level-container .level .records .user {
+    padding-block: 1rem;
+}
 .page-list .level-container .level .records .user {
     width: 100%;
 }
-.page-list .level-container .level .records .percent,
+.page-list .level-container .level .records .percent {
+    text-align: end;
+}
 .page-list .meta-container .og a:hover,
 .page-list .level-container .level .records a:hover {
     text-decoration: underline;
