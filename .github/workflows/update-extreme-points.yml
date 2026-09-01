@@ -5,6 +5,9 @@ on:
         - cron: "0 2 * * *"
     workflow_dispatch:
 
+permissions:
+    contents: write
+
 jobs:
     update-points:
         runs-on: ubuntu-latest
@@ -35,5 +38,5 @@ jobs:
                     echo "No changes to commit."
                   else
                     git commit -m "Update extreme demon points"
-                    git push
+                    git push "https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}.git" HEAD:${{ github.ref_name }}
                   fi
