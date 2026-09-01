@@ -2,6 +2,7 @@ import { store } from "../main.js";
 import { embed } from "../util.js";
 import { score } from "../score.js";
 import { fetchEditors, fetchList } from "../content.js";
+import { getLevelStatAverage, formatStatValue } from "../stats.js";
 
 import ChallengeRules from "./ChallengeRules.js";
 import ExtremeRules from "./ExtremeRules.js";
@@ -59,6 +60,18 @@ export default {
 
             return verification;
         },
+        levelAverageEnjoyment() {
+            if (this.listType !== "challenges") {
+                return null;
+            }
+            return getLevelStatAverage(this.level, "enjoyment");
+        },
+        levelAverageAttempts() {
+            if (this.listType !== "challenges") {
+                return null;
+            }
+            return getLevelStatAverage(this.level, "attempts");
+        },
     },
     async mounted() {
         await this.loadList();
@@ -103,5 +116,6 @@ export default {
         },
         embed,
         score,
+        formatStatValue,
     },
 };

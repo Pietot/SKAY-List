@@ -31,6 +31,9 @@
                 :author="level.author"
                 :creators="level.creators"
                 :verifier="level.verifier"
+                :attempts="level.attempts"
+                :enjoyment="level.enjoyment"
+                :listType="listType"
             ></LevelAuthors>
             <video
                 v-if="video && !isYoutubeVideo"
@@ -55,6 +58,14 @@
                     </p>
                     <p v-else>{{ level.aredl_points }}</p>
                 </li>
+                <li v-if="listType === 'challenges'">
+                    <div class="type-title-sm">Average Enjoyment</div>
+                    <p>{{ formatStatValue(levelAverageEnjoyment, '/10') }}</p>
+                </li>
+                <li v-if="listType === 'challenges'">
+                    <div class="type-title-sm">Average Attempts</div>
+                    <p>{{ formatStatValue(levelAverageAttempts) }}</p>
+                </li>
                 <li>
                     <div class="type-title-sm">ID</div>
                     <p>{{ level.id }}</p>
@@ -77,6 +88,22 @@
                             class="type-label-lg"
                             >{{ record.user }}</a
                         >
+                    </td>
+                    <td v-if="listType === 'challenges'" class="stats-detail">
+                        <div class="record-stats">
+                            <span
+                                v-if="typeof record.enjoyment !== 'undefined' && record.enjoyment !== null && record.enjoyment !== ''"
+                            >
+                                {{ record.enjoyment }}/10
+                            </span>
+                            <span v-else>-</span>
+                            <span
+                                v-if="typeof record.attempts !== 'undefined' && record.attempts !== null && record.attempts !== ''"
+                            >
+                                {{ record.attempts }} tries
+                            </span>
+                            <span v-else>-</span>
+                        </div>
                     </td>
                 </tr>
             </table>

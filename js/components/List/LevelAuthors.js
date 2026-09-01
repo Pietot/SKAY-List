@@ -12,6 +12,18 @@ export default {
             type: String,
             required: true,
         },
+        listType: {
+            type: String,
+            required: true,
+        },
+        attempts: {
+            type: [Number, String],
+            default: null,
+        },
+        enjoyment: {
+            type: [Number, String],
+            default: null,
+        },
     },
     template: `
         <div class="level-authors">
@@ -48,12 +60,34 @@ export default {
             <p class="type-body">
                 <span>{{ author }}</span>
             </p>
+            <div v-if="listType === 'challenges'" class="type-title-sm">Attempts</div>
+            <p v-if="listType === 'challenges'" class="type-body">
+                <span>{{ attemptsText }}</span>
+            </p>
+            <div v-if="listType === 'challenges'" class="type-title-sm">Enjoyment</div>
+            <p v-if="listType === 'challenges'" class="type-body">
+                <span>{{ enjoymentText }}</span>
+            </p>
         </div>
     `,
 
     computed: {
         selfVerified() {
             return this.author === this.verifier && this.creators.length === 0;
+        },
+        attemptsText() {
+            return this.attempts === null ||
+                this.attempts === undefined ||
+                this.attempts === ""
+                ? "-"
+                : this.attempts;
+        },
+        enjoymentText() {
+            return this.enjoyment === null ||
+                this.enjoyment === undefined ||
+                this.enjoyment === ""
+                ? "-"
+                : `${this.enjoyment}/10`;
         },
     },
 };

@@ -55,6 +55,13 @@ if __name__ == "__main__":
     parser.add_argument(
         "--verification", type=str, help="The verification link of the challenge to add."
     )
+    parser.add_argument(
+        "--attempts", type=int, help="The number of attempts to verify/complete the challenge."
+    )
+    parser.add_argument(
+        "--enjoyment", type=int, help="The enjoyment rating of the challenge.", choices=range(1, 11)
+    )
+
     args = parser.parse_args()
 
     if args.type == "extreme":
@@ -114,6 +121,8 @@ if __name__ == "__main__":
             creators=args.creators,
             verifier=args.verifier,
             verification=args.verification,
+            attempts=args.attempts,
+            enjoyment=args.enjoyment,
         )
 
         # check if the name is already in the JSON file

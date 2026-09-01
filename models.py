@@ -23,3 +23,9 @@ class Challenge(BaseModel):
     creators: list[str] = Field(..., description="The creators of the challenge.")
     verifier: str = Field(..., description="The verifier of the challenge.")
     verification: str = Field(..., description="The verification link of the challenge.")
+    attempts: int | None = Field(
+        None, description="The number of attempts to verify/complete the challenge."
+    )
+    enjoyment: int | None = Field(
+        None, description="The enjoyment rating of the challenge.", gt=0, lt=11
+    )
