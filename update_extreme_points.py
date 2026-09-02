@@ -1,5 +1,6 @@
 import json
 from pathlib import Path
+import time
 
 import requests
 
@@ -47,6 +48,7 @@ def refresh_level_points(level_name: str) -> int:
     points = int(payload.get("points", 0))
     level_data["aredl_points"] = points
     write_json(level_path, level_data)
+    time.sleep(0.5)
     return points
 
 
