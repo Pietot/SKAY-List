@@ -58,17 +58,17 @@
                     </p>
                     <p v-else>{{ level.aredl_points }}</p>
                 </li>
-                <li v-if="listType === 'challenges'">
-                    <div class="type-title-sm">Average Enjoyment</div>
-                    <p>{{ formatStatValue(levelAverageEnjoyment, '/10') }}</p>
+                <li>
+                    <div class="type-title-sm">ID</div>
+                    <p>{{ level.id }}</p>
                 </li>
                 <li v-if="listType === 'challenges'">
                     <div class="type-title-sm">Average Attempts</div>
                     <p>{{ formatStatValue(levelAverageAttempts) }}</p>
                 </li>
-                <li>
-                    <div class="type-title-sm">ID</div>
-                    <p>{{ level.id }}</p>
+                <li v-if="listType === 'challenges'">
+                    <div class="type-title-sm">Average Enjoyment</div>
+                    <p>{{ formatStatValue(levelAverageEnjoyment, '/10') }}</p>
                 </li>
             </ul>
             <h2>Records</h2>
@@ -89,21 +89,23 @@
                             >{{ record.user }}</a
                         >
                     </td>
-                    <td v-if="listType === 'challenges'" class="stats-detail">
-                        <div class="record-stats">
-                            <span
-                                v-if="typeof record.enjoyment !== 'undefined' && record.enjoyment !== null && record.enjoyment !== ''"
-                            >
-                                {{ record.enjoyment }}/10
-                            </span>
-                            <span v-else>-</span>
-                            <span
-                                v-if="typeof record.attempts !== 'undefined' && record.attempts !== null && record.attempts !== ''"
-                            >
-                                {{ record.attempts }} tries
-                            </span>
-                            <span v-else>-</span>
-                        </div>
+                    <td v-if="listType === 'challenges'" class="attempts">
+                        <span
+                            class="type-label-lg"
+                            v-if="typeof record.attempts !== 'undefined' && record.attempts !== null && record.attempts !== ''"
+                        >
+                            {{ record.attempts }}
+                        </span>
+                        <span v-else class="type-label-lg">-</span>
+                    </td>
+                    <td v-if="listType === 'challenges'" class="enjoyment">
+                        <span
+                            class="type-label-lg"
+                            v-if="typeof record.enjoyment !== 'undefined' && record.enjoyment !== null && record.enjoyment !== ''"
+                        >
+                            {{ record.enjoyment }}/10
+                        </span>
+                        <span v-else class="type-label-lg">-</span>
                     </td>
                 </tr>
             </table>

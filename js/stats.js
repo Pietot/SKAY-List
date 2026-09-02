@@ -19,11 +19,10 @@ export function getLevelStatAverage(level, key) {
     }
 
     const directValue = level[key];
-    if (
-        directValue !== null &&
-        directValue !== undefined &&
-        directValue !== ""
-    ) {
+    const hasDirectValue =
+        directValue !== null && directValue !== undefined && directValue !== "";
+
+    if (hasDirectValue && !level.records) { 
         return Number(directValue);
     }
 
@@ -31,17 +30,17 @@ export function getLevelStatAverage(level, key) {
         return null;
     }
 
-    const values = level.records
-        .map((record) => record?.[key])
-        .filter(
-            (value) => value !== null && value !== undefined && value !== "",
-        );
+    const values = [
+        ...(hasDirectValue ? [directValue] : []),
+        ...level.records
+            .map((record) => record?.[key])
+            .filter(
+                (value) =>
+                    value !== null && value !== undefined && value !== "",
+            ),
+    ];
 
-    if (values.length === 0) {
-        return null;
-    }
-
-    return getAvailableAverage(values);
+    return values.length > 0 ? getAvailableAverage(values) : null;
 }
 
 export function formatStatValue(value, suffix = "") {

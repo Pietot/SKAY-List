@@ -78,13 +78,22 @@
 .page-list .level-container .level .records tr td:not(:last-child) {
     padding-right: 1rem;
 }
-
+.page-list .level-container .level .records .record {
+    display: flex;
+    align-items: center;
+}
 .page-list .level-container .level .records .percent,
 .page-list .level-container .level .records .user {
     padding-block: 1rem;
 }
 .page-list .level-container .level .records .user {
-    width: 100%;
+    flex: 2;
+}
+.page-list .level-container .level .records .attempts,
+.page-list .level-container .level .records .enjoyment {
+    text-align: right;
+    display: block;
+    flex: 1;
 }
 .page-list .level-container .level .records .percent {
     text-align: end;
