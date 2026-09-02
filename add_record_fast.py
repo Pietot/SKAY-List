@@ -8,7 +8,7 @@ USER = ""
 LINK = ""
 
 def strip_url_keys(url: str) -> str:
-    return re.sub(r"([?&])(?:list|index|pp|si)=[^&]+", "", url)
+    return re.sub(r"([?&])(?:list|index|pp|si|is)=[^&]+", "", url)
 
 if __name__ == "__main__":
     cmd = [
