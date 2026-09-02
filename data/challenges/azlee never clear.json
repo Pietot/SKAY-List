@@ -8,5 +8,13 @@
     "verifier": "Piétôt",
     "verification": "https://cdn.discordapp.com/attachments/1544027779635482725/1544363951003803729/Replay_2026-09-01_16-49-36_3.mp4?ex=6a983c82&is=6a96eb02&hm=0b587ac71a4c4b6a710210106120caf2868ba9dabdfa9c7a2e2b44c0d7558a3f&",
     "attempts": 2192,
-    "enjoyment": 6
+    "enjoyment": 6,
+    "records": [
+        {
+            "user": "Lium",
+            "link": "https://cdn.discordapp.com/attachments/1544027779635482725/1544764451650019449/MedalTVGeometryDash20260902193735334-trim-1788370846031.mp4?ex=6a99b181&hm=ee197df4aa58bdb1795c01c8e903610d51f0b43a8be42e88035415336a43b829&",
+            "attempts": 9452,
+            "enjoyment": 5
+        }
+    ]
 }
