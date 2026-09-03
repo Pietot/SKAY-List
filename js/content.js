@@ -109,7 +109,10 @@ export async function fetchLeaderboard(listType = "challenges") {
             completed.push({
                 rank: rank + 1,
                 level: level.name,
-                score: level.aredl_points,
+                score:
+                    listType === "challenges"
+                        ? score(rank + 1)
+                        : level.aredl_points,
                 link: record.link,
             });
             return;
@@ -117,6 +120,7 @@ export async function fetchLeaderboard(listType = "challenges") {
     });
 
     const res = Object.entries(scoreMap).map(([user, scores]) => {
+        console.log(user, scores);
         const { verified, completed } = scores;
         const total = [verified, completed]
             .flat()
