@@ -8,5 +8,13 @@
     "verifier": "Piétôt",
     "verification": "https://cdn.discordapp.com/attachments/1544027779635482725/1544678249140068372/Replay_2026-09-02_13-54-00_1.mp4?ex=6a996139&is=6a980fb9&hm=fb72e32a65f16bd9b38587c1be74e5ba79c9f8dd254d0bc21aafad2ffbf964c0&",
     "attempts": 68,
-    "enjoyment": 7
+    "enjoyment": 7,
+    "records": [
+        {
+            "user": "Matt_92",
+            "link": "https://cdn.discordapp.com/attachments/1544027779635482725/1546953160755519493/aimroy_never.mp4?ex=6aa1a7e6&hm=7fd00a930c30f99ad6ab2ca547df1a2a1176f91f2c1a965f777eca8c98b859ed&",
+            "attempts": 917,
+            "enjoyment": 4.65
+        }
+    ]
 }
