@@ -59,7 +59,7 @@ if __name__ == "__main__":
         "--attempts", type=int, help="The number of attempts to verify/complete the challenge."
     )
     parser.add_argument(
-        "--enjoyment", type=int, help="The enjoyment rating of the challenge.", choices=range(1, 11)
+        "--enjoyment", type=int, help="The enjoyment rating of the challenge.", choices=range(11)
     )
 
     args = parser.parse_args()

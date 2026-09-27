@@ -27,5 +27,5 @@ class Challenge(BaseModel):
         None, description="The number of attempts to verify/complete the challenge."
     )
     enjoyment: int | None = Field(
-        None, description="The enjoyment rating of the challenge.", gt=0, lt=11
+        None, description="The enjoyment rating of the challenge.", ge=0, lt=11
     )
