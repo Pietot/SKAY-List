@@ -8,5 +8,13 @@
     "verifier": "Piétôt",
     "verification": "https://cdn.discordapp.com/attachments/1544027779635482725/1555546671637729291/Replay_2026-10-02_13-41-11_1.mp4?backend=b2&ex=6ac0eb3b&is=6abf99bb&hm=882f0d27e3a24f94262ccb56b356110d6d585869b7b4f406677afc6d23ac17c1&",
     "attempts": 601,
-    "enjoyment": 3
+    "enjoyment": 3,
+    "records": [
+        {
+            "user": "AimRoy",
+            "link": "https://cdn.discordapp.com/attachments/1544027779635482725/1555625047752839209/stice_challenge_100.mp4?ex=6ac13439&hm=5ea09a6a7bd61ead1b11890aaef41c1f8f5bf4ee10c5f6c67e4085ebf8e310f8&",
+            "attempts": 1500,
+            "enjoyment": 5
+        }
+    ]
 }
